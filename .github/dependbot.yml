@@ -1,0 +1,11 @@
+version: 2
+
+updates:
+- package-ecosystem: pipenv
+  directory: "/"
+  schedule:
+    interval: daily
+    timezone: Australia/Melbourne
+  open-pull-requests-limit: 10
+  labels:
+  - ready-for-review
