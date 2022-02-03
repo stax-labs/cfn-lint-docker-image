@@ -1,11 +1,18 @@
 version: 2
 
 updates:
-- package-ecosystem: pipenv
-  directory: "/"
-  schedule:
-    interval: daily
-    timezone: Australia/Melbourne
-  open-pull-requests-limit: 10
-  labels:
-  - ready-for-review
+  - package-ecosystem: pipenv
+    directory: "/"
+    schedule:
+      interval: weekly
+      timezone: Australia/Melbourne
+    open-pull-requests-limit: 10
+    labels:
+      - ready-for-review
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: weekly
+      timezone: Australia/Melbourne
+    labels:
+      - ready-for-review
