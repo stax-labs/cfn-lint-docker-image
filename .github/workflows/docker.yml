@@ -10,6 +10,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  TEST_TAG: "stax-labs/cfn-lint:test"
 
 jobs:
   build:
@@ -40,11 +41,22 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
+      - name: Build Docker image
+        id: build-and-push
+        uses: docker/build-push-action@1814d3dfb36d6f84174e61f4a4b05bd84089a4b9
+        with:
+          context: .
+          tags: ${{ env.TEST_TAG }}
+
+      - name: Extract cfn-lint version
+        run: |
+          echo cfnlint_version=$(docker run --rm ${{ env.TEST_TAG }} --version | cut -d ' ' -f2) >> $GITHUB_ENV
+
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@1814d3dfb36d6f84174e61f4a4b05bd84089a4b9
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:{{ env.cfnlint_version }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           labels: ${{ steps.meta.outputs.labels }}
