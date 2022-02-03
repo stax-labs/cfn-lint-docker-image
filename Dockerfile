@@ -5,6 +5,6 @@ LABEL version=1.0 maintainer="Stax Development Team" author="Mark Wolfe"
 RUN pip install pipenv
 ADD Pipfile Pipfile.lock /src/
 WORKDIR /src
-RUN pipenv install
+RUN pipenv install --system
 
-CMD pipenv run cfn-lint
+ENTRYPOINT ["/usr/local/bin/cfn-lint"]
