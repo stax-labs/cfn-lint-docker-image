@@ -4,4 +4,4 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-cfn-lint = "v0.59.1"
+cfn-lint = "v0.61.2"
